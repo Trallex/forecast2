@@ -1,4 +1,4 @@
-package pt.ubi.di.pmd.forecast.data.response
+package pt.ubi.di.pmd.forecast.data.db.entity
 
 import com.google.gson.annotations.SerializedName
 

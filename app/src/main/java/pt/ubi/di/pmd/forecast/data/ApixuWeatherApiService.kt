@@ -6,7 +6,7 @@ import retrofit2.http.Query
 import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import pt.ubi.di.pmd.forecast.data.response.CurrentWeatherResponse
+import pt.ubi.di.pmd.forecast.data.network.response.CurrentWeatherResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

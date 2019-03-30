@@ -1,4 +1,4 @@
-package pt.ubi.di.pmd.forecast.data.response
+package pt.ubi.di.pmd.forecast.data.db.entity
 
 data class Condition(
     val text: String,
