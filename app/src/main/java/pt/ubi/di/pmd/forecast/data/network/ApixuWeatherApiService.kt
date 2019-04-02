@@ -1,4 +1,4 @@
-package pt.ubi.di.pmd.forecast.data
+package pt.ubi.di.pmd.forecast.data.network
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import retrofit2.http.GET
@@ -20,7 +20,9 @@ interface ApixuWeatherApiService {
         @Query("leng") languageCode: String = "en"
     ): Deferred<CurrentWeatherResponse>
     companion object{
-        operator fun invoke(): ApixuWeatherApiService{
+        operator fun invoke(
+            connectivityInterceptor: ConnectivityInterceptor
+        ): ApixuWeatherApiService {
             val requesInterceptor = Interceptor { chain ->
 
                 val url = chain.request()
@@ -39,6 +41,7 @@ interface ApixuWeatherApiService {
 
         val okHttpClient  = OkHttpClient.Builder()
             .addInterceptor(requesInterceptor)
+            .addInterceptor(connectivityInterceptor)
             .build()
 
         return Retrofit.Builder()
