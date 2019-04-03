@@ -7,14 +7,19 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.threeten.bp.ZonedDateTime
 import pt.ubi.di.pmd.forecast.data.db.CurrentWeatherDao
+import pt.ubi.di.pmd.forecast.data.db.WeatherLocationDao
+import pt.ubi.di.pmd.forecast.data.db.entity.WeatherLocation
 import pt.ubi.di.pmd.forecast.data.db.unitlocalized.UnitSpecificCurrentWeatherEntry
 import pt.ubi.di.pmd.forecast.data.network.WeatherNetworkDataSource
 import pt.ubi.di.pmd.forecast.data.network.response.CurrentWeatherResponse
+import pt.ubi.di.pmd.forecast.data.provider.LocationProvider
 import java.util.*
 
 class ForecastRepositoryImpl(
     private val currentWeatherDao: CurrentWeatherDao,
-    private val weatherNetworkDataSource: WeatherNetworkDataSource
+    private val weatherLocationDao: WeatherLocationDao,
+    private val weatherNetworkDataSource: WeatherNetworkDataSource,
+    private val locationProvider: LocationProvider
 ) : ForecastRepository {
     init {
         weatherNetworkDataSource.downloadedCurrentWeather.observeForever{ newCurrentWeather ->
@@ -30,20 +35,36 @@ class ForecastRepositoryImpl(
 
     }
 
+    override suspend fun getWeatherLocation(): LiveData<WeatherLocation> {
+        return withContext(Dispatchers.IO){
+            return@withContext weatherLocationDao.getLocation()
+        }
+    }
+
+
     private fun persistFetchedCurrentWeather(fetchedWeather: CurrentWeatherResponse){
         GlobalScope.launch(Dispatchers.IO) {
             currentWeatherDao.upsert(fetchedWeather.currentWeatherEntry)
+            weatherLocationDao.upsert(fetchedWeather.location)
         }
     }
 
     private suspend fun initWeatherData(){
-        if(isFetchCurrentNeeded(ZonedDateTime.now().minusHours(1)))
+        val lastWeatherLocation = weatherLocationDao.getLocation().value
+
+        if (lastWeatherLocation == null
+            || locationProvider.hasLocationChanged(lastWeatherLocation)){
+            fetchCurrentWeather()
+            return
+        }
+
+        if(isFetchCurrentNeeded(lastWeatherLocation.zonedDateTime))
             fetchCurrentWeather()
     }
 
     private suspend fun fetchCurrentWeather(){
          weatherNetworkDataSource.fetchCurrentWeather(
-             "Zabrze",
+             locationProvider.getPreferredLocationString(),
              Locale.getDefault().language
          )
     }
