@@ -1,6 +1,7 @@
 package pt.ubi.di.pmd.forecast.data.db
 
 import androidx.lifecycle.LiveData
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -9,6 +10,7 @@ import pt.ubi.di.pmd.forecast.data.db.entity.FutureWeatherEntry
 import pt.ubi.di.pmd.forecast.data.db.unitlocalized.future.ImperialSimpleFutureWeatherEntry
 import pt.ubi.di.pmd.forecast.data.db.unitlocalized.future.MetricSimpleFutureWeatherEntry
 
+@Dao
 interface FutureWeatherDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(futureWeatherEntries: List<FutureWeatherEntry>)
