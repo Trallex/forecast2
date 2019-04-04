@@ -9,7 +9,7 @@ import org.threeten.bp.ZonedDateTime
 import pt.ubi.di.pmd.forecast.data.db.CurrentWeatherDao
 import pt.ubi.di.pmd.forecast.data.db.WeatherLocationDao
 import pt.ubi.di.pmd.forecast.data.db.entity.WeatherLocation
-import pt.ubi.di.pmd.forecast.data.db.unitlocalized.UnitSpecificCurrentWeatherEntry
+import pt.ubi.di.pmd.forecast.data.db.unitlocalized.current.UnitSpecificCurrentWeatherEntry
 import pt.ubi.di.pmd.forecast.data.network.WeatherNetworkDataSource
 import pt.ubi.di.pmd.forecast.data.network.response.CurrentWeatherResponse
 import pt.ubi.di.pmd.forecast.data.provider.LocationProvider

@@ -1,4 +1,4 @@
-package pt.ubi.di.pmd.forecast.data.db.unitlocalized
+package pt.ubi.di.pmd.forecast.data.db.unitlocalized.current
 
 import androidx.room.ColumnInfo
 
@@ -20,4 +20,4 @@ data class MetricCurrentWeatherEntry(
     @ColumnInfo(name="visKm")
     override val visibilityDistance: Double
 
-):UnitSpecificCurrentWeatherEntry
+): UnitSpecificCurrentWeatherEntry

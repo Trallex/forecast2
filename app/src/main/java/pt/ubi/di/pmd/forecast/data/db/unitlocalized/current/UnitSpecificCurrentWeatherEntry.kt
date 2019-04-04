@@ -1,4 +1,4 @@
-package pt.ubi.di.pmd.forecast.data.db.unitlocalized
+package pt.ubi.di.pmd.forecast.data.db.unitlocalized.current
 
 interface UnitSpecificCurrentWeatherEntry {
     val temperature: Double

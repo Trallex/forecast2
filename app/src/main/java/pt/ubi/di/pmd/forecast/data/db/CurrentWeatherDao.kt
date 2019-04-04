@@ -7,8 +7,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import pt.ubi.di.pmd.forecast.data.db.entity.CURRENT_WEATHER_ID
 import pt.ubi.di.pmd.forecast.data.db.entity.CurrentWeatherEntry
-import pt.ubi.di.pmd.forecast.data.db.unitlocalized.ImperialCurrentWeatherEntry
-import pt.ubi.di.pmd.forecast.data.db.unitlocalized.MetricCurrentWeatherEntry
+import pt.ubi.di.pmd.forecast.data.db.unitlocalized.current.ImperialCurrentWeatherEntry
+import pt.ubi.di.pmd.forecast.data.db.unitlocalized.current.MetricCurrentWeatherEntry
 
 
 @Dao
