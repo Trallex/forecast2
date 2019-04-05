@@ -6,8 +6,8 @@ import kotlinx.android.synthetic.main.item_future_weather.*
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.FormatStyle
 import pt.ubi.di.pmd.forecast.R
-import pt.ubi.di.pmd.forecast.data.db.unitlocalized.future.MetricSimpleFutureWeatherEntry
-import pt.ubi.di.pmd.forecast.data.db.unitlocalized.future.UnitSpecificSimpleFutureWeatherEntry
+import pt.ubi.di.pmd.forecast.data.db.unitlocalized.future.list.MetricSimpleFutureWeatherEntry
+import pt.ubi.di.pmd.forecast.data.db.unitlocalized.future.list.UnitSpecificSimpleFutureWeatherEntry
 import pt.ubi.di.pmd.forecast.internal.glide.GlideApp
 
 class FutureWeatherItem(
