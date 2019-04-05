@@ -21,6 +21,7 @@ import pt.ubi.di.pmd.forecast.data.provider.UnitProviderImpl
 import pt.ubi.di.pmd.forecast.data.repository.ForecastRepository
 import pt.ubi.di.pmd.forecast.data.repository.ForecastRepositoryImpl
 import pt.ubi.di.pmd.forecast.ui.weather.current.CurrentWeatherViewModelFactory
+import pt.ubi.di.pmd.forecast.ui.weather.future.list.FutureListWeatherViewModelFactory
 
 class ForecastApplication: Application(), KodeinAware {
     override val kodein = Kodein.lazy {
@@ -28,15 +29,17 @@ class ForecastApplication: Application(), KodeinAware {
 
         bind() from singleton { ForecastDatabase(instance()) }
         bind() from singleton { instance<ForecastDatabase>().currentWeatherDao() }
+        bind() from singleton { instance<ForecastDatabase>().futureWeatherDao() }
         bind() from singleton { instance<ForecastDatabase>().weatherLocationDao() }
         bind<ConnectivityInterceptor>() with singleton { ConnectivityInterceptorImpl(instance()) }
         bind() from singleton { ApixuWeatherApiService(instance()) }
         bind<WeatherNetworkDataSource>() with singleton { WeatherNetworkDataSourceImpl(instance()) }
         bind() from provider { LocationServices.getFusedLocationProviderClient(instance<Context>()) }
         bind<LocationProvider>() with singleton { LocationProviderImpl(instance(), instance()) }
-        bind<ForecastRepository>() with singleton { ForecastRepositoryImpl(instance(), instance(), instance(), instance()) }
+        bind<ForecastRepository>() with singleton { ForecastRepositoryImpl(instance(), instance(), instance(), instance(), instance()) }
         bind<UnitProvider>() with singleton { UnitProviderImpl(instance()) }
         bind() from provider { CurrentWeatherViewModelFactory(instance(), instance()) }
+        bind() from provider { FutureListWeatherViewModelFactory(instance(), instance()) }
     }
 
     override fun onCreate() {
