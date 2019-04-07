@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import com.google.android.gms.location.FusedLocationProviderClient
 import kotlinx.coroutines.Deferred
@@ -50,6 +51,7 @@ class LocationProviderImpl(
     private suspend fun hasDeviceLocationChanged(lastWeatherLocation: WeatherLocation): Boolean{
         if(!isUsingDeviceLocation())
             return false
+
         val deviceLocation = getLastDeviceLocation().await()
             ?: return false
 
@@ -81,7 +83,7 @@ class LocationProviderImpl(
             throw LocationPermissionNotGrantedException()
     }
     private fun hasLocationPermission(): Boolean{
-        return checkSelfPermission(appContext,
+        return ContextCompat.checkSelfPermission(appContext,
             Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
 }

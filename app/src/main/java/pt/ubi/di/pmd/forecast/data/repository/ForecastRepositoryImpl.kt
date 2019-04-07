@@ -1,5 +1,6 @@
 package pt.ubi.di.pmd.forecast.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -71,6 +72,7 @@ class ForecastRepositoryImpl(
 
     override suspend fun getWeatherLocation(): LiveData<WeatherLocation> {
         return withContext(Dispatchers.IO){
+            Log.e("Location", weatherLocationDao.getLocation().value.toString())
             return@withContext weatherLocationDao.getLocation()
         }
     }
@@ -98,7 +100,7 @@ class ForecastRepositoryImpl(
 
     private suspend fun initWeatherData(){
         val lastWeatherLocation = weatherLocationDao.getLocationNonLive()
-
+        Log.e("Location", "Inside init ${weatherLocationDao.getLocation().value.toString()}")
         if (lastWeatherLocation == null
             || locationProvider.hasLocationChanged(lastWeatherLocation)){
             fetchCurrentWeather()

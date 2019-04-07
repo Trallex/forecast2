@@ -2,25 +2,18 @@ package pt.ubi.di.pmd.forecast.ui.weather.current
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.current_weather_fragment.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
 
 import pt.ubi.di.pmd.forecast.R
-import pt.ubi.di.pmd.forecast.data.network.ApixuWeatherApiService
-import pt.ubi.di.pmd.forecast.data.network.ConnectivityInterceptorImpl
-import pt.ubi.di.pmd.forecast.data.network.WeatherNetworkDataSourceImpl
 import pt.ubi.di.pmd.forecast.internal.glide.GlideApp
 import pt.ubi.di.pmd.forecast.ui.base.ScopedFragment
 
@@ -49,10 +42,10 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
     private fun bindUI() = launch{
         val currentWeather = viewModel.weather.await()
 
-        val wetherLocation = viewModel.weatherLocation.await()
+        val weatherLocation = viewModel.weatherLocation.await()
 
 
-        wetherLocation.observe(this@CurrentWeatherFragment, Observer {location ->
+        weatherLocation.observe(this@CurrentWeatherFragment, Observer { location ->
             if(location==null) return@Observer
             updateLocation(location.name)
         })
@@ -64,7 +57,7 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
             updateDateToToday()
             updateTemperatures(it.temperature, it.feelsLikeTemperature)
             updateCondition(it.conditionText)
-            updatePrecipitation(it.precipitationVolume)
+            updatePressure(it.pressureVolume)
             updateWind(it.windDirection, it.windSpeed)
             updateVisibilty(it.visibilityDistance)
 
@@ -92,9 +85,9 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
     private fun updateCondition(condition: String){
         textView_condition.text = condition
     }
-    private fun updatePrecipitation(precipitationVolume: Double){
-        val unitAbbreviation = chooseLocalizedUnitAbbreviation("mm", "in")
-        textView_precipitation.text = "Precipitation: $precipitationVolume $unitAbbreviation"
+    private fun updatePressure(pressureVolume: Double){
+        val unitAbbreviation = chooseLocalizedUnitAbbreviation("mb", "in")
+        textView_pressure.text = "Pressure: $pressureVolume $unitAbbreviation"
     }
     private fun updateWind(windDirection: String, windSpeed: Double){
         val unitAbbreviation = chooseLocalizedUnitAbbreviation("kph", "mph")

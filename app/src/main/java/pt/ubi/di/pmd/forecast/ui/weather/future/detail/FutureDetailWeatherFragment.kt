@@ -2,7 +2,6 @@ package pt.ubi.di.pmd.forecast.ui.weather.future.detail
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.future_detail_weather_fragment.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.factory
@@ -108,7 +106,7 @@ class FutureDetailWeatherFragment : ScopedFragment(), KodeinAware {
 
     private fun updatePrecipitation(precipitationVolume: Double) {
         val unitAbbreviation = chooseLocalizedUnitAbbreviation("mm", "in")
-        textView_precipitation.text = "Precipitation: $precipitationVolume $unitAbbreviation"
+        textView_pressure.text = "Precipitation: $precipitationVolume $unitAbbreviation"
     }
 
     private fun updateWindSpeed(windSpeed: Double) {

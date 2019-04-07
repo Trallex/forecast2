@@ -6,7 +6,7 @@ interface UnitSpecificCurrentWeatherEntry {
     val conditionIconUrl: String
     val windSpeed: Double
     val windDirection: String
-    val precipitationVolume: Double
+    val pressureVolume: Double
     val feelsLikeTemperature: Double
     val visibilityDistance: Double
 }
