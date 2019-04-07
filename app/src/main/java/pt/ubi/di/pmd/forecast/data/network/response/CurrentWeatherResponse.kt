@@ -7,5 +7,5 @@ import pt.ubi.di.pmd.forecast.data.db.entity.WeatherLocation
 data class CurrentWeatherResponse(
     val location: WeatherLocation,
     @SerializedName("current")
-    val currentWeatherEntry: CurrentWeatherEntry
+    val currentWeatherEntry: CurrentWeatherEntry  //z LiveData do
 )

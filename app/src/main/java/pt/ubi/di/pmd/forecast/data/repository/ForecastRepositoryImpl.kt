@@ -77,7 +77,7 @@ class ForecastRepositoryImpl(
         }
     }
 
-    private fun persistFetchedCurrentWeather(fetchedWeather: CurrentWeatherResponse) {
+    private fun persistFetchedCurrentWeather(fetchedWeather: CurrentWeatherResponse) {  // Z Lividata do Dao
         GlobalScope.launch(Dispatchers.IO) {
             currentWeatherDao.upsert(fetchedWeather.currentWeatherEntry)
             weatherLocationDao.upsert(fetchedWeather.location)

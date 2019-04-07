@@ -38,8 +38,8 @@ class LocationProviderImpl(
         if (isUsingDeviceLocation()) {
             try {
                 val deviceLocation = getLastDeviceLocation().await()
-                    ?: return "${getCustomLocationName()}"
-                return "${deviceLocation.latitude},${deviceLocation.longitude}"
+                    ?:return "${getCustomLocationName()}"
+                return "${deviceLocation?.latitude},${deviceLocation?.longitude}"
             } catch (e: LocationPermissionNotGrantedException) {
                 return "${getCustomLocationName()}"
             }

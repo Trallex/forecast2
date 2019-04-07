@@ -42,7 +42,7 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
         bindUI()
     }
 
-    private fun bindUI() = launch{
+    private fun bindUI() = launch{  //VIEWMODEL JEST PUSTY
         val currentWeather = viewModel.weather.await()
         //Log.d("DebugDB-wea", currentWeather.value?.temperature.toString())
         val weatherLocation = viewModel.weatherLocation.await()

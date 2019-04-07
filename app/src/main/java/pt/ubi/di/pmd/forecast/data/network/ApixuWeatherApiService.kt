@@ -16,7 +16,7 @@ const val API_KEY = "a4e4e3ccb0364a25bf1190213192603"
 
 interface ApixuWeatherApiService {
     @GET("current.json")
-    fun getCurrentWeather(
+    fun getCurrentWeather(   //DO APKI z API
         @Query("q") location: String,
         @Query("lang") languageCode: String = "en"
     ): Deferred<CurrentWeatherResponse>
