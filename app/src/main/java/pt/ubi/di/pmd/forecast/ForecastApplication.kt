@@ -22,7 +22,7 @@ import pt.ubi.di.pmd.forecast.ui.weather.current.CurrentWeatherViewModelFactory
 import pt.ubi.di.pmd.forecast.ui.weather.future.detail.FutureDetailWeatherViewModelFactory
 import pt.ubi.di.pmd.forecast.ui.weather.future.list.FutureListWeatherViewModelFactory
 
-class ForecastApplication: Application(), KodeinAware {
+class ForecastApplication : Application(), KodeinAware {
     override val kodein = Kodein.lazy {
         import(androidXModule(this@ForecastApplication))
 
@@ -47,5 +47,4 @@ class ForecastApplication: Application(), KodeinAware {
         AndroidThreeTen.init(this)
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
     }
-
 }

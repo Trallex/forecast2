@@ -2,6 +2,8 @@ package pt.ubi.di.pmd.forecast.ui.weather.current
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
 
 import pt.ubi.di.pmd.forecast.R
+import pt.ubi.di.pmd.forecast.data.provider.USE_DEVICE_LOCATION
 import pt.ubi.di.pmd.forecast.internal.glide.GlideApp
 import pt.ubi.di.pmd.forecast.ui.base.ScopedFragment
 
@@ -41,15 +44,16 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
 
     private fun bindUI() = launch{
         val currentWeather = viewModel.weather.await()
-
+        //Log.d("DebugDB-wea", currentWeather.value?.temperature.toString())
         val weatherLocation = viewModel.weatherLocation.await()
 
 
         weatherLocation.observe(this@CurrentWeatherFragment, Observer { location ->
             if(location==null) return@Observer
             updateLocation(location.name)
-        })
 
+            Log.e("PrefState", PreferenceManager.getDefaultSharedPreferences(context).getBoolean(USE_DEVICE_LOCATION, false).toString())
+        })
         currentWeather.observe(this@CurrentWeatherFragment, Observer {
             if(it==null) return@Observer
 

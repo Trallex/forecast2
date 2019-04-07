@@ -13,7 +13,7 @@
             android:key="CUSTOM_LOCATION"
             android:title="Loaction"
             android:summary="The location for which the weather is displayed"
-            android:defaultValue="Zabrze"
+            android:defaultValue="Gdynia"
             android:dependency="USE_DEVICE_LOCATION"/>
     </PreferenceCategory>
     <PreferenceCategory

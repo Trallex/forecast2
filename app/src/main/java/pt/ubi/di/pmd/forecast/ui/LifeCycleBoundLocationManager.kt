@@ -9,7 +9,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 
-class LifeCycleBoundLocationManager(
+class LifecycleBoundLocationManager(
     lifecycleOwner: LifecycleOwner,
     private val fusedLocationProviderClient: FusedLocationProviderClient,
     private val locationCallback: LocationCallback
@@ -24,14 +24,15 @@ class LifeCycleBoundLocationManager(
         fastestInterval = 5000
         priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
     }
+
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     @SuppressLint("MissingPermission")
-    fun startLocationUpdates(){
+    fun startLocationUpdates() {
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null)
     }
+
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    fun removerLocationUpdates(){
+    fun removeLocationUpdates() {
         fusedLocationProviderClient.removeLocationUpdates(locationCallback)
     }
-
 }

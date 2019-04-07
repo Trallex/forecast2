@@ -21,13 +21,14 @@ import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
 import pt.ubi.di.pmd.forecast.R
 
-private const val MY_PERMISSION_ACCESS_COARSE_LOCATION  = 1
+private const val MY_PERMISSION_ACCESS_COARSE_LOCATION = 1
 
-class MainActivity : AppCompatActivity(), KodeinAware{
+class MainActivity : AppCompatActivity(), KodeinAware {
+
     override val kodein by closestKodein()
     private val fusedLocationProviderClient: FusedLocationProviderClient by instance()
 
-    private val locationCallback = object : LocationCallback(){
+    private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(p0: LocationResult?) {
             super.onLocationResult(p0)
         }
@@ -38,24 +39,25 @@ class MainActivity : AppCompatActivity(), KodeinAware{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         setSupportActionBar(toolbar)
 
-        navController = Navigation.findNavController( this, R.id.nav_host_fragment )
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+
         bottom_nav.setupWithNavController(navController)
+
         NavigationUI.setupActionBarWithNavController(this, navController)
 
         requestLocationPermission()
 
-        if(hasLocationPermission()){
+        if (hasLocationPermission()) {
             bindLocationManager()
         }
         else
             requestLocationPermission()
     }
 
-    private fun bindLocationManager(){
-        LifeCycleBoundLocationManager(
+    private fun bindLocationManager() {
+        LifecycleBoundLocationManager(
             this,
             fusedLocationProviderClient, locationCallback
         )
@@ -65,7 +67,7 @@ class MainActivity : AppCompatActivity(), KodeinAware{
         return NavigationUI.navigateUp(null, navController)
     }
 
-    private fun requestLocationPermission(){
+    private fun requestLocationPermission() {
         ActivityCompat.requestPermissions(
             this,
             arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
@@ -73,7 +75,7 @@ class MainActivity : AppCompatActivity(), KodeinAware{
         )
     }
 
-    private fun hasLocationPermission(): Boolean{
+    private fun hasLocationPermission(): Boolean {
         return ContextCompat.checkSelfPermission(this,
             Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
@@ -83,8 +85,8 @@ class MainActivity : AppCompatActivity(), KodeinAware{
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if(requestCode == MY_PERMISSION_ACCESS_COARSE_LOCATION){
-            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        if (requestCode == MY_PERMISSION_ACCESS_COARSE_LOCATION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 bindLocationManager()
             else
                 Toast.makeText(this, "Please, set location manually in settings", Toast.LENGTH_LONG).show()
