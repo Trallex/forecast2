@@ -6,12 +6,14 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.util.Log
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import com.google.android.gms.location.FusedLocationProviderClient
 import kotlinx.coroutines.Deferred
 import pt.ubi.di.pmd.forecast.data.db.entity.WeatherLocation
 import pt.ubi.di.pmd.forecast.internal.LocationPermissionNotGrantedException
+import pt.ubi.di.pmd.forecast.internal.NoLocationException
 import pt.ubi.di.pmd.forecast.internal.asDeferred
 
 const val USE_DEVICE_LOCATION = "USE_DEVICE_LOCATION"
@@ -38,14 +40,27 @@ class LocationProviderImpl(
         if (isUsingDeviceLocation()) {
             try {
                 val deviceLocation = getLastDeviceLocation().await()
-                    ?:return "${getCustomLocationName()}"
+                    ?: if(!getCustomLocationName().equals(""))return "${getCustomLocationName()}"
+                    else
+                        throw NoLocationException()
                 return "${deviceLocation?.latitude},${deviceLocation?.longitude}"
             } catch (e: LocationPermissionNotGrantedException) {
                 return "${getCustomLocationName()}"
+            }catch (e: NoLocationException){
+                return "Zabrze"
             }
         }
         else
-            return "${getCustomLocationName()}"
+            try {
+                Log.e("LocationNameDB", getCustomLocationName())
+                if (!getCustomLocationName().equals(""))
+                    return "${getCustomLocationName()}"
+                else throw NoLocationException()
+            }catch(e: NoLocationException){
+                return "Zabrze"
+            }
+        return "Zabrze"
+
     }
 
     private suspend fun hasDeviceLocationChanged(lastWeatherLocation: WeatherLocation): Boolean {
