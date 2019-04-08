@@ -87,6 +87,6 @@ class LocationProviderImpl(
 
     private fun hasLocationPermission(): Boolean {
         return ContextCompat.checkSelfPermission(appContext,
-            Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
 }
