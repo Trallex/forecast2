@@ -6,8 +6,10 @@ import retrofit2.http.Query
 import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+
 import pt.ubi.di.pmd.forecast.data.network.response.CurrentWeatherResponse
 import pt.ubi.di.pmd.forecast.data.network.response.FutureWeatherResponse
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -19,14 +21,14 @@ interface ApixuWeatherApiService {
     fun getCurrentWeather(   //DO APKI z API
         @Query("q") location: String,
         @Query("lang") languageCode: String = "en"
-    ): Deferred<CurrentWeatherResponse>
+    ): Deferred<Response<CurrentWeatherResponse>>
 
     //http://api.apixu.com/v1/forecast.json?key=a4e4e3ccb0364a25bf1190213192603&q=Zabrze&days=1
     @GET("forecast.json")
     fun getFutureWeather(@Query("q") location: String,
                          @Query("days") days: Int,
                          @Query("lang") languageCode: String = "en")
-    :Deferred<FutureWeatherResponse>
+    :Deferred<Response<FutureWeatherResponse>>
 
     companion object{
         operator fun invoke(
